@@ -1,0 +1,10 @@
+How are we going to implement the following SEPP techniques in our project?
+
+1. Version Control - Git (already using)
+2. Build Automation -
+3. Dependency management - 
+4. Testing - 
+5. Continuos integration - 
+6. Continuos deployment - 
+7. Containerisation - 
+8. Observability - 
