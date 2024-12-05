@@ -8,7 +8,11 @@ How are we going to implement the following SEPP techniques in our project?
     - Packing: see dependency management
     - Deployment, see containerisation
 3. Dependency management - use poetry to handle depency management and packing
-4. Testing - we will use Tox to automate testing
+4. Testing - we will use Tox to automate testing on github and perfrom the following tests speceific to our project:
+        - Unit tests: set commands for validating indivdual functions, i.e. testing aggregation of user baskets into household order.
+        - Integration tests: test interaction with different systems, i.e. our DB
+        - Property-Based: test with randomised examples, i.e. for basket aggregation
+        - Formal verification: use matheatical methods to verfiy correctness, i.e. delivery fee splitting 
 5. Continuos integration - we do this naturally on github:
     - push code
     - guthub automatically runs unit tests and linting tests
@@ -18,4 +22,9 @@ How are we going to implement the following SEPP techniques in our project?
     - Use build tool Github Actions to deploy the build to a staging environment, then final envrionment
     - Use prometheus for monitoring
 7. Containerisation - We will use Docker to containersie the code
-8. Observability - 
+8. Observability - this is defined as the ability to measure the internal state of a system based on its external outputs, allows monitoring.  We will implement by doing the following:
+    - Embedding code to track the number of API requests.
+    - Use Pythons logging library to caputre important application events
+    - For monitoring, see CD above
+    - Use Jaeger to trace API requests
+    - Use Prometheus Alertmanager to trigger Slack alerts if API latency exceeded
