@@ -1,10 +1,18 @@
 How are we going to implement the following SEPP techniques in our project?
 
 1. Version Control - Git (already using)
-2. Build Automation -
+2. Build Automation - we will use multiple build tools for various phases of the project:
+    - Development: we will use Makefiles to automate dependecnies (sqllite3)
+    - Testing: we will use Tox to automate testing
 3. Dependency management - 
 4. Testing - 
-5. Continuos integration - 
-6. Continuos deployment - 
+5. Continuos integration - we do this naturally on github:
+    - push code
+    - guthub automatically runs unit tests and linting tests
+    - the system reports success or failure
+6. Continuos deployment - this is when validated code is automatically deployed to production:
+    - Continue from CI, pass the tests
+    - Use build tool Github Actions to deploy the build to a staging environment, then final envrionment
+    - Use prometheus for monitoring
 7. Containerisation - 
 8. Observability - 
