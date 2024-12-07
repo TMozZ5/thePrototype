@@ -11,34 +11,61 @@ on:
 
 # Jobs
 jobs:
-  test:
+  # TEST
+  test-and-lint:
     runs-on: ubuntu-latest
-
     steps:
+      # CHECKOUT
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+
+      # PYTHON SETUP
+      - name: py setup
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - run: pip install -r dependencies.txt
-      - run: pytest
-      
+
+        # DEPENDENCIES
+      - name: dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # TEST
+      - name: run tests
+        run: pytest tests/
+
+      # LINT
+      - name: lint
+        run: |
+          pip install pylint
+          pylint *.py
+
+  # BUILD
   build-and-deploy:
-    needs: test
+    needs: test-and-lint
     runs-on: ubuntu-latest
     steps:
+      # CHECKOUT
       - uses: actions/checkout@v3
+
+      # LOGIN
       - uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - run: |
+
+      # BUILD AND PUSH
+      - name: build and push
+        run: |
         docker build -t myapp:latest .
-        docker tag myapp:latest <INSETR_DOCKER_USERNAME>/myapp:latest
-        docker push <INSERT_DOCKER_USERNAME>/myapp:latest
+        docker tag myapp:latest username/myapp:latest
+        docker push username/myapp:latest
+
+      # DEPLOY TO AWS
       - uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ecs-task.json # LOOK AT
           service: my-service
           cluster: my-cluster
-          region: # ENTER REGION
+          region: us-east-1
   
