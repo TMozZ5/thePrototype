@@ -58,8 +58,8 @@ jobs:
       - name: build and push
         run: |
         docker build -t prototype:latest .
-        docker tag myapp:latest username/prototype:latest
-        docker push username/prototype:latest
+        docker tag myapp:latest tmozz/prototype:latest
+        docker push tmozz/prototype:latest
 
       # DEPLOY TO AWS
       - uses: aws-actions/amazon-ecs-deploy-task-definition@v1
