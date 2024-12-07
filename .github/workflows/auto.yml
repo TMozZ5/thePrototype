@@ -70,7 +70,7 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ecs-task.json
-          service: my-service
+          service: prototype-service
           cluster: prototype-cluster
           region: eu-west-2
         env:
