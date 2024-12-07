@@ -7,13 +7,11 @@ on:
       - main
     paths:
       - '**/*.py'
-      - '**/*.db'
   pull_request:
     branches:
       - main
     paths:
       - '**/*.py'
-      - '**/*.db'
 
 # Jobs
 jobs:
