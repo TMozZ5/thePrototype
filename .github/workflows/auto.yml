@@ -60,11 +60,3 @@ jobs:
           docker build -t prototype:latest .
           docker tag prototype:latest tmozz/prototype:latest
           docker push tmozz/prototype:latest
-
-      # DEPLOY TO AWS
-      - uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ecs-task.json
-          service: my-service
-          cluster: my-cluster
-          region: eu-west-2
