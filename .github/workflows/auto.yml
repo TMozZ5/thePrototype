@@ -69,7 +69,7 @@ jobs:
       - name: Deploy to AWS ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ecs-task.json
+          task-definition: ".github/workflows/esc-task.json"
           service: prototype-service
           cluster: prototype-cluster
           region: eu-west-2
