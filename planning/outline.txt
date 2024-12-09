@@ -1,0 +1,29 @@
+Based on the EDR, this is what we are the classes and methods we are expecting to implement. Due to the nature of writing software, this will not be an accurate representation of the end implementation. There will be additional methods required, and it may be more efficient to organise the code in a different way.
+
+Database methods.
+Database.py, SQL.py
+To prevent excessively unreadable functions in the Database object, we will write the SQL queries in a separate file. These strings can then be imported and executed in the Database object. We will define the queries we anticipate building, however this is not to be an exhaustive list.
+- add new product from supermarket data sheet
+- search products by string
+- create a new order in database
+- get the active order, where the date created is past and there is no date ordered
+- set the data ordered to the current timestamp
+- create a new basket for a given user when a new order is created
+- get current basket id, based on get active ordered method above and user id passed
+- add product to basket by creating a record for it in the basket_contents table
+- removing that record for the basket_contents table, called when the quantity is set to zero
+- update quantity of the basket_contents table
+- get current order by returning all basket_contents table of a given basket_id, list of product ids and quantity
+- get order by aggregating each individual basket into one order
+
+GUI methods.
+Views
+The plan is to have an object which will create a search view and an object that will create a basket view. These can then be updated and shown when a search is made or the basket is revealed. It may be possible to contain each product found in the search criteria or basket as its own object with functions attached.
+
+Supermarket methods.
+Supermarket.py, test_data.json
+Since we are not given access to a supermarket API, we will have to create some test data for which the program can run on. This will be as similar to what we would expect a supermarket API as possible. The Supermarket object will then preprocess this data and pass it to the database object to store it appropriately. Since it is possible for us to have multiple supermarkets in deployment, this will be simulated by a parent Supermarket function, which specific supermarkets, say SupermarketA, will inherit.
+
+Other methods.
+User.py
+Create a straightforward user object to return the users name when required by the basket object. No additional complexity will be required for the prototype.
