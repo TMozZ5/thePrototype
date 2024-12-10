@@ -1,8 +1,8 @@
 import pytest
 from Database import Database
 from SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
-
-
+#Test database.py
+#author：bingrui li
 @pytest.fixture
 def db():
     database = Database(":memory:") 
