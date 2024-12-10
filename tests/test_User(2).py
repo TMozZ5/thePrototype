@@ -2,7 +2,8 @@ import pytest
 from User import User
 from Database import Database
 from SQLQeueries import USER_TABLE
-
+#Test User.py
+#author：bingrui li
 
 @pytest.fixture
 def db(): 
