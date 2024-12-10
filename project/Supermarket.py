@@ -1,7 +1,10 @@
 import json, os
+import logging
 from datetime import datetime, timedelta
 from helpers import download_image
 
+logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
+                    format="%(asctime)s - %(message)s")
 
 class Supermarket:
 
@@ -16,13 +19,15 @@ class Supermarket:
         if self.get_recent_database_update() < (datetime.now() - timedelta(days=2)):
             self.process_book()
             self.record_database_update()
-        # ensures products are downloaded for program runtime
-        self.process_book()
+        else:
+            logging.info("No need to process supermarket JSON as it has already been done within the past two days.")
+
 
     def make_directory(self):
         os.makedirs(f"{os.getcwd()}/data/images/{self.supermarket_name}/", exist_ok=True)
 
     def download_image(self, url, product_id):
+        print("opened download image once")
         extension = f"/data/images/{self.supermarket_name}/{product_id}.png"
         download_image(url, extension)
         return extension
@@ -76,9 +81,11 @@ class SupermarketA(Supermarket):
         for product in self.read_book():
             product_id = product["product_id"]
             image_url = product["image_url"]
+            # check if already in dir
             image_location = self.download_image(image_url, product_id)
             self.database.add_new_product(
                 (product["product_id"], product["name"], image_location, product["promotion"], product["price"]))
+        logging.info(f"Processing JSON file, saving changes to Database.")
 
     def place_order(self, query):
         # reformat data into json format as received, but only with product id and quantity
@@ -87,6 +94,7 @@ class SupermarketA(Supermarket):
         if sum(item[1] for item in query) >= 5:
             # jsn variable would be posted to api
             jsn = json.dumps([{"product_id": item[0], "quantity": item[1]} for item in query], indent=4)
+            logging.info(f"Simulating placing order with API. JSN post query: \n {jsn}")
             return "Order placed successfully."
         return "Add at least five items to the order."
 
