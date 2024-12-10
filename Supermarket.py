@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 class Supermarket:
 
     # parent supermarket function, inherited by individual supermarket objects
-    # author:
+    # author: Saibo Guo
 
     def __init__(self, database):
 
