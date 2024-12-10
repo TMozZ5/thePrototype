@@ -1,3 +1,4 @@
+import os
 import tkinter as tk
 from PIL import Image, ImageTk
 from io import BytesIO
@@ -7,7 +8,7 @@ import requests
 class ProductInView:
 
     # parent class for products both in search window and basket window
-    # author:
+    # author: Ben Thompson
 
     def __init__(self, database, product_id, product_name, image_url, quantity, price, promotion, basket_view):
 
@@ -35,14 +36,10 @@ class ProductInView:
 
     # preprocesses image from url to tk image object
     # returns ImageTk object ready to be drawn to screen
-    def display_image(self, image_url):
+    def display_image(self, image_location):
 
-        response = requests.get(image_url, timeout=5)
-        response.raise_for_status()
-        image_data = BytesIO(response.content)
-
-        image = Image.open(image_data)
-        image = image.resize((100,100))
+        image = Image.open(os.getcwd() + image_location)
+        image = image.resize((100, 100))
         photo = ImageTk.PhotoImage(image)
 
         return photo

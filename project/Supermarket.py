@@ -1,13 +1,12 @@
-import json
+import json, os
 from datetime import datetime, timedelta
+from helpers import download_image
 
 
-    # parent supermarket function, inherited by individual supermarket objects
-    # author: Saibo Guo
 class Supermarket:
 
     # parent supermarket function, inherited by individual supermarket objects
-    # author:
+    # author: Saibo Guo
 
     def __init__(self, database):
 
@@ -17,6 +16,16 @@ class Supermarket:
         if self.get_recent_database_update() < (datetime.now() - timedelta(days=2)):
             self.process_book()
             self.record_database_update()
+        # ensures products are downloaded for program runtime
+        self.process_book()
+
+    def make_directory(self):
+        os.makedirs(f"{os.getcwd()}/data/images/{self.supermarket_name}/", exist_ok=True)
+
+    def download_image(self, url, product_id):
+        extension = f"/data/images/{self.supermarket_name}/{product_id}.png"
+        download_image(url, extension)
+        return extension
 
     def process_book(self):
         # overwritten in child functions
@@ -48,6 +57,8 @@ class SupermarketA(Supermarket):
         self.supermarket_id = 1
         super().__init__(database)
 
+        self.make_directory()
+
     def get_data_book(self):
         # since prototype, created example data source to use
         # would expect a source file to be provided by partnering supermarket
@@ -63,9 +74,11 @@ class SupermarketA(Supermarket):
     def process_book(self):
         # iterates through json file extracting relevant product information, adding to list as tuples
         for product in self.read_book():
+            product_id = product["product_id"]
+            image_url = product["image_url"]
+            image_location = self.download_image(image_url, product_id)
             self.database.add_new_product(
-                (product["product_id"], product["name"], product["image_url"], product["promotion"], product["price"]))
-        self.database.close_database()
+                (product["product_id"], product["name"], image_location, product["promotion"], product["price"]))
 
     def place_order(self, query):
         # reformat data into json format as received, but only with product id and quantity

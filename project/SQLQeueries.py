@@ -1,5 +1,4 @@
 """File contains all the SQL queries used in this application."""
-# Author: Tom M 
 
 # queries for creating initial tables for database
 USER_TABLE = """CREATE TABLE IF NOT EXISTS user (
