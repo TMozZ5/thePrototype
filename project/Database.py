@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+import logging
 
 import Supermarket
 from SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
@@ -11,27 +12,29 @@ from SQLQeueries import ADD_PRODUCT_TO_BASKET_QUERY, DELETE_PRODUCT_CONTENTS_QUE
     GET_BASKET_CONTENTS_QUERY, GET_ORDER_QUERY
 from helpers import get_order_split
 
+logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
+                    format="%(asctime)s - %(message)s")
 
 class Database:
 
     # database object for communicating with database file
     # when application closes, close_database function is called to commit changes
-    # author: Tom Morris
+    # author:
 
     def __init__(self):
         self.connection = sqlite3.connect("SSHsystem.db")
         self.cursor = self.connection.cursor()
 
         self.supermarketa = Supermarket.SupermarketA(self)
-
         self.create_tables()
 
+    def log(self, action):
+        logging.info(action)
     # method to create the tables on loading application
     # nothing is created if tables already exist
     def create_tables(self):
         for table in [USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE]:
             self.cursor.execute(table)
-        self.connection.commit()
 
     # method used to get username from id, only method on user table
     def get_name(self, user_id):
@@ -43,6 +46,7 @@ class Database:
     def add_new_product(self, data):
         # data parameter is formatted as a tuple (id, name, image_url, promotion, price)
         self.cursor.execute(ADD_PRODUCT_QUERY, data)
+        self.log(f"Added new product to Product table: {data[1]} with ID {data[0]}.")
 
     # returns a list of tuples with data, name contains keyword parameter passed
     def get_searched_products(self, keyword):
@@ -54,7 +58,9 @@ class Database:
     # returns new order_id
     def create_order(self):
         self.cursor.execute(CREATE_ORDER_QUERY, (datetime.now().strftime('%Y%m%d'), get_order_split()))
-        return self.cursor.lastrowid
+        order_id = self.cursor.lastrowid
+        self.log(f"New order record created with ID: {order_id}.")
+        return order_id
 
     # gets active order (date_created is past, no date_placed), returns order_id
     # if one is not found, a new order is created
@@ -68,12 +74,15 @@ class Database:
     # completes order by setting current day to order placed, time not neccesary
     def complete_order(self, current_order):
         self.cursor.execute(COMPLETE_ORDER_QUERY, (datetime.now().strftime('%Y%m%d'), current_order))
+        self.log(f"Order committed on ID:{current_order}.")
 
     # methods used on basket table
     # creates new basket, returning id
     def create_basket(self, order_id, user_id):
         self.cursor.execute(CREATE_BASKET_QUERY, (user_id, order_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
-        return self.cursor.lastrowid
+        basket_id = self.cursor.lastrowid
+        self.log(f"New basket ID: {basket_id} created on order ID: {order_id} for user  ID: {user_id}.")
+        return basket_id
 
     # gets current basket_id, calculated from current active order and user_id
     # if one is not found, a new basket is created and its id is returned
@@ -90,10 +99,12 @@ class Database:
     # if a record already exists with the same basket_id and product_id_, the quantity is updated instead
     def add_product_to_basket(self, basket_id, product_id, quantity):
         self.cursor.execute(ADD_PRODUCT_TO_BASKET_QUERY, (basket_id, product_id, quantity,))
+        self.log(f"Added product ID: {product_id} to basket ID :{basket_id} with quantity: {quantity}.")
 
     # removes record from table, used when quantity of product reaches zero
     def remove_product_from_basket(self, basket_id, product_id):
         self.cursor.execute(DELETE_PRODUCT_CONTENTS_QUERY, (basket_id, product_id))
+        self.log(f"Removed product ID: {product_id} from basket ID :{basket_id}.")
 
     # updates quantity of record
     # calls remove_product_from_basket is quantity is zero
@@ -102,6 +113,7 @@ class Database:
             self.remove_product_from_basket(basket_id, product_id)
         else:
             self.cursor.execute(UPDATE_QUANTITY_QUERY, (quantity, basket_id, product_id))
+            self.log(f"Updated quantity: {quantity} for product ID: {product_id} from basket ID :{basket_id}.")
 
     # returns a list of tuples (product_id, name, image_url, quantity, price, promotion)
     # only contains items held in the current active basket, indexed by parameter basket_id

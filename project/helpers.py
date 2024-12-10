@@ -1,9 +1,13 @@
-
 import json, os, requests
 from PIL import Image
 from io import BytesIO
+import logging
 
-#author：bingrui li
+logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
+                    format="%(asctime)s - %(message)s")
+
+
+# author：Bingrui Li
 # returns saved order split agreed upon by the house
 def get_order_split():
     with open("logs/order_constants.json") as json_file:
@@ -18,6 +22,7 @@ def download_image(url, filepath):
         filepath = os.getcwd() + filepath
         # Check if the file already exists
         if os.path.isfile(filepath):
+            logging.info(f"Attempted to download image for {filepath} but already exists.")
             return f"File already exists: {filepath}"
 
         # Download the image
@@ -28,11 +33,11 @@ def download_image(url, filepath):
         image = Image.open(BytesIO(response.content))
         image.save(filepath, format="PNG")
 
+        logging.info(f"Downloaded image to {filepath}.")
+
         return f"Image downloaded and saved as PNG: {filepath}"
 
     except requests.exceptions.RequestException as e:
         return f"Error downloading image: {e}"
     except Exception as e:
         return f"Error: {e}"
-=======
-

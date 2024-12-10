@@ -1,0 +1,27 @@
+2024-12-10 22:25:33,976 - Added product ID: 29 to basket ID :12 with quantity: 1.
+2024-12-10 22:25:34,114 - Added product ID: 29 to basket ID :12 with quantity: 2.
+2024-12-10 22:25:37,029 - Added product ID: 28 to basket ID :12 with quantity: 1.
+2024-12-10 22:25:37,174 - Added product ID: 28 to basket ID :12 with quantity: 2.
+2024-12-10 22:25:39,315 - Simulating placing order with API. JSN post query: 
+ [
+    {
+        "product_id": 25,
+        "quantity": 2
+    },
+    {
+        "product_id": 28,
+        "quantity": 2
+    },
+    {
+        "product_id": 29,
+        "quantity": 2
+    }
+]
+2024-12-10 22:25:39,316 - Order committed on ID:13.
+2024-12-10 22:25:39,317 - New order record created with ID: 14.
+2024-12-10 22:25:39,317 - New basket ID: 13 created on order ID: 14 for user  ID: 565.
+2024-12-10 22:32:03,775 - No need to process supermarket JSON as it has already been done within the past two days.
+2024-12-10 22:32:03,912 - No need to process supermarket JSON as it has already been done within the past two days.
+2024-12-10 22:32:03,916 - Window instance created.
+2024-12-10 22:32:13,828 - Added product ID: 29 to basket ID :13 with quantity: 1.
+2024-12-10 22:32:14,781 - Window instance closed.
