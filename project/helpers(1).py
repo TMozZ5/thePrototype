@@ -1,5 +1,6 @@
 import json
 
+#author：bingrui li
 # returns saved order split agreed upon by the house
 def get_order_split():
     with open("logs/order_constants.json") as json_file:
