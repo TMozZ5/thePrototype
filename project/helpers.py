@@ -1,7 +1,9 @@
+
 import json, os, requests
 from PIL import Image
 from io import BytesIO
 
+#author：bingrui li
 # returns saved order split agreed upon by the house
 def get_order_split():
     with open("logs/order_constants.json") as json_file:
@@ -32,3 +34,5 @@ def download_image(url, filepath):
         return f"Error downloading image: {e}"
     except Exception as e:
         return f"Error: {e}"
+=======
+

@@ -2,6 +2,7 @@ name: Main Pipeline
 
 # Triggers
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
