@@ -1,6 +1,6 @@
 from Database import Database
 
-
+#author：bingrui li
 class User:
 
     # minimal user class to facilitate shopping basket function
