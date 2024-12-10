@@ -37,7 +37,9 @@ jobs:
 
       # TEST
       - name: Run Tests
-        run: pytest tests/
+        env:
+          PYTHONPATH: ${{ github.workspace }}/project
+        run: pytest
 
       # LINT
       - name: Lint Code
