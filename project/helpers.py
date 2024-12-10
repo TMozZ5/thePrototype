@@ -34,5 +34,3 @@ def download_image(url, filepath):
         return f"Error downloading image: {e}"
     except Exception as e:
         return f"Error: {e}"
-=======
-
