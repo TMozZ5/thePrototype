@@ -4,6 +4,8 @@ import tkinter as tk
 from io import BytesIO
 from Product import ProductInView, ProductInBasket, ProductInSearch
 
+    # Test Product.py
+    # author: Saibo Guo
 @pytest.fixture
 def mock_database():
     return Mock()
