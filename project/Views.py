@@ -8,7 +8,7 @@ class ProductsView:
 
     # parent class for view containing products
     # inherited by BasketView and SearchView
-    # author:
+    # author: Ben Thompson
 
     def __init__(self, database, root):
 
