@@ -9,8 +9,8 @@ logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
 
 # author：Bingrui Li
 # returns saved order split agreed upon by the house
-def get_order_split():
-    with open("logs/order_constants.json") as json_file:
+def get_order_split(file_path="logs/order_constants.json"):
+    with open(file_path) as json_file:
         json_data = json.load(json_file)
     for constant in json_data:
         if constant["type"] == "order_split":
