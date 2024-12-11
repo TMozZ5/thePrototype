@@ -22,7 +22,7 @@ class Database:
     # author:
 
     def __init__(self, db_path="SSHsystem.db"):
-        self.connection = sqlite3.connect("SSHsystem.db")
+        self.connection = sqlite3.connect(db_path)
         self.cursor = self.connection.cursor()
 
         self.supermarketa = Supermarket.SupermarketA(self)
