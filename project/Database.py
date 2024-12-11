@@ -21,7 +21,7 @@ class Database:
     # when application closes, close_database function is called to commit changes
     # author:
 
-    def __init__(self):
+    def __init__(self, db_path="SSHsystem.db"):
         self.connection = sqlite3.connect("SSHsystem.db")
         self.cursor = self.connection.cursor()
 
