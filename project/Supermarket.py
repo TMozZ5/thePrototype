@@ -76,7 +76,9 @@ class SupermarketA(Supermarket):
         # since prototype, created example data source to use
         # would expect a source file to be provided by partnering supermarket
         # this function in that case would return the downloaded file from supermarket api
-        return "data/supermarketa_stocklist_04122024.json"
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+        file_path = os.path.join(base_dir, "data/supermarketa_stocklist_04122024.json")
+        return file_path
 
     def read_book(self):
         # reads json file into local variable

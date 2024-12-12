@@ -1,5 +1,5 @@
 import pytest
-import json
+import json, os
 from datetime import datetime, timedelta
 from Supermarket import SupermarketA
 from Database import Database
@@ -17,8 +17,11 @@ def db():
 def test_get_recent_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     last_update = supermarket.get_recent_database_update()
-    
-    with open("../project/logs/data_updates.json", "r") as f:
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+    file_path = os.path.join(base_dir, "logs/data_updates.json")
+
+    with open(file_path, "r") as f:
         data = json.load(f)
 
     expected_timestamp = datetime.strptime(data[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
@@ -29,7 +32,10 @@ def test_record_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     supermarket.record_database_update()
 
-    with open("../project/logs/data_updates.json", "r") as f:
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+    file_path = os.path.join(base_dir, "logs/data_updates.json")
+
+    with open(file_path, "r") as f:
         data = json.load(f)
 
     updated_timestamp = datetime.strptime(data[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
