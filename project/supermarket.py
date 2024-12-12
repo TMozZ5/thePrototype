@@ -10,7 +10,7 @@ logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
 
-class supermarket:
+class Supermarket:
 
     """Parent supermarket function. Inherited from individual supermarkets.
     Author: Saibo Guo"""
@@ -95,7 +95,7 @@ class supermarket:
             json.dump(json_data, json_file)
 
 
-class supermarketA(supermarket):
+class SupermarketA(Supermarket):
 
     """
     Object to interact with pretend supermarketA. Inherits Supermarket.

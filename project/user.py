@@ -1,7 +1,7 @@
 """Contains User object import."""
-from Database import database
+from database import Database
 
-class user:
+class User:
 
     """
     Minimal user class to facilitate shopping basket function. Would
@@ -18,4 +18,4 @@ class user:
         """
         :return: the name associated with user_id in database
         """
-        return database().get_name(self.user_id)
+        return Database().get_name(self.user_id)

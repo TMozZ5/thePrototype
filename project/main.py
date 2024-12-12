@@ -5,13 +5,13 @@ import logging
 import tkinter as tk
 import atexit
 
-from Database import database
-from Views import basketView
+from database import Database
+from views import Basketview
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
-db = database()
+db = Database()
 
 # creates and set the main application window
 root = tk.Tk()
@@ -19,7 +19,7 @@ root.title("Shopping Basket")
 root.geometry("400x500")
 
 # add the basket view object to the main window
-view = basketView(db, root, 565)
+view = Basketview(db, root, 565)
 
 # create the window and run program
 view.create_window()

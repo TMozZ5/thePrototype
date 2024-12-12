@@ -2,21 +2,21 @@ import pytest
 import json
 import os
 from datetime import datetime, timedelta
-from Supermarket import supermarketA
-from Database import database
+from supermarket import SupermarketA
+from database import Database
 
     # Test Supermarket.py
     # author: Saibo Guo
 
 @pytest.fixture
 def db():
-    db = database(":memory:")
-    db.create_tables()
-    return db
+    database = Database(":memory:")
+    database.create_tables()
+    return database
 
 
 def test_get_recent_database_update():
-    supermarket = supermarketA(database(":memory:"))
+    supermarket = SupermarketA(Database(":memory:"))
     last_update = supermarket.get_recent_database_update()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
@@ -31,7 +31,7 @@ def test_get_recent_database_update():
 
 
 def test_record_database_update():
-    supermarket = supermarketA(database(":memory:"))
+    supermarket = SupermarketA(Database(":memory:"))
     supermarket.record_database_update()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
@@ -47,7 +47,7 @@ def test_record_database_update():
 
 
 def test_get_data_book():
-    supermarket = supermarketA(database(":memory:"))
+    supermarket = SupermarketA(Database(":memory:"))
     data_book = supermarket.get_data_book()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
@@ -58,7 +58,7 @@ def test_get_data_book():
 
 
 def test_read_book():
-    supermarket = supermarketA(database(":memory:"))
+    supermarket = SupermarketA(Database(":memory:"))
     products = supermarket.read_book()
 
     assert len(products) > 0, "No products were read from the JSON file."
@@ -66,7 +66,7 @@ def test_read_book():
 
 
 def test_process_book(db):
-    supermarket = supermarketA(db)
+    supermarket = SupermarketA(db)
     supermarket.process_book()
 
     db.cursor.execute("SELECT * FROM product WHERE product_id = ?", ("001",))
@@ -77,7 +77,7 @@ def test_process_book(db):
 
 
 def test_place_order():
-    supermarket = supermarketA(database(":memory:"))
+    supermarket = SupermarketA(Database(":memory:"))
 
     result = supermarket.place_order([
         ("001", 3),

@@ -3,10 +3,10 @@ within the Tkinter window."""
 
 import tkinter as tk
 from tkinter import ttk
-from Product import productInBasket, productInSearch
-from User import user
+from product import productInBasket, productInSearch
+from user import User
 
-class productsView:
+class Productsview:
 
     """
     Parent class for views containing products. Inherited by
@@ -55,7 +55,7 @@ class productsView:
         for widget in frame.winfo_children():
             widget.destroy()
 
-class basketView (productsView):
+class Basketview (Productsview):
 
     """
     Object used to create a view for a shopping basket.
@@ -66,13 +66,13 @@ class basketView (productsView):
     def __init__(self, database, root, user_id):
         super().__init__(database, root)
 
-        us = user(user_id)
-        self.user_id, self.user_name = user_id, us.get_name()
+        user = User(user_id)
+        self.user_id, self.user_name = user_id, user.get_name()
         # sets basket_id when program is first launched
         self.get_current_basket()
 
         # create search view object to switch to when a product is searched
-        self.search_view = searchView(database, root, user_id, self)
+        self.search_view = Searchview(database, root, user_id, self)
         # scroll frame object, used to contain both products in basket and products in search
         self.scrollable_frame = self.scroll_frame()
         self.total_cost = 0
@@ -232,7 +232,7 @@ class basketView (productsView):
         self.show_basket(self.scrollable_frame)
 
 
-class searchView (productsView):
+class Searchview (Productsview):
 
     """
     Object used to build search view.

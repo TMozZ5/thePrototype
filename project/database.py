@@ -4,20 +4,20 @@ import sqlite3
 from datetime import datetime
 import logging
 
-from Supermarket import supermarketA
-from SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
-from SQLQeueries import GET_USER_NAME
-from SQLQeueries import ADD_PRODUCT_QUERY, GET_SEARCHED_PRODUCTS_QUERY
-from SQLQeueries import CREATE_ORDER_QUERY, GET_CURRENT_ORDER_QUERY, COMPLETE_ORDER_QUERY
-from SQLQeueries import CREATE_BASKET_QUERY, GET_BASKET_ID_QUERY
-from SQLQeueries import ADD_PRODUCT_TO_BASKET_QUERY, DELETE_PRODUCT_CONTENTS_QUERY,\
+from supermarket import SupermarketA
+from sql_queries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
+from sql_queries import GET_USER_NAME
+from sql_queries import ADD_PRODUCT_QUERY, GET_SEARCHED_PRODUCTS_QUERY
+from sql_queries import CREATE_ORDER_QUERY, GET_CURRENT_ORDER_QUERY, COMPLETE_ORDER_QUERY
+from sql_queries import CREATE_BASKET_QUERY, GET_BASKET_ID_QUERY
+from sql_queries import ADD_PRODUCT_TO_BASKET_QUERY, DELETE_PRODUCT_CONTENTS_QUERY,\
     UPDATE_QUANTITY_QUERY, GET_BASKET_CONTENTS_QUERY, GET_ORDER_QUERY
 from helpers import get_order_split
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
-class database:
+class Database:
 
     """
     Database object for communicating with database file.
@@ -29,7 +29,7 @@ class database:
         self.connection = sqlite3.connect(db_path)
         self.cursor = self.connection.cursor()
 
-        self.supermarketa = supermarketA(self)
+        self.supermarketa = SupermarketA(self)
         self.create_tables()
 
     def log(self, action):

@@ -1,17 +1,17 @@
 import pytest
-from Database import database
-from Database import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
-#Test Database.py
+from database import Database
+from database import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
+#Test database.py
 #author：bingrui li
 @pytest.fixture
 def db():
-    db = database(":memory:")
-    db.cursor.execute(USER_TABLE)
-    db.cursor.execute(PRODUCT_TABLE)
-    db.cursor.execute(ORDER_TABLE)
-    db.cursor.execute(BASKET_TABLE)
-    db.cursor.execute(BASKET_CONTAINS_TABLE)
-    db.connection.commit()
+    database = Database(":memory:")
+    database.cursor.execute(USER_TABLE)
+    database.cursor.execute(PRODUCT_TABLE)
+    database.cursor.execute(ORDER_TABLE)
+    database.cursor.execute(BASKET_TABLE)
+    database.cursor.execute(BASKET_CONTAINS_TABLE)
+    database.connection.commit()
     return db
 
 
