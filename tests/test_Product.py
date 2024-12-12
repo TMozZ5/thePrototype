@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock, patch
-from ..Product import ProductInView, ProductInBasket, ProductInSearch
+from Product import ProductInView, ProductInBasket, ProductInSearch
 
 # test_product.py
 # author: Saibo Guo

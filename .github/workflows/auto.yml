@@ -35,10 +35,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r ".github/workflows/dependencies.txt"
 
-      # IMPORTS
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=project" >> $GITHUB_ENV
-        
       # TEST
       - name: Run Tests
         env:
