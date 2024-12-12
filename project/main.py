@@ -5,7 +5,7 @@ import logging
 import tkinter as tk
 import atexit
 
-from database import database
+from Database import database
 from Views import basketView
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,

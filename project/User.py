@@ -1,5 +1,5 @@
 """Contains User object import."""
-from database import database
+from Database import database
 
 class user:
 

@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 import logging
 
-import supermarket
+from Supermarket import supermarketA
 from SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
 from SQLQeueries import GET_USER_NAME
 from SQLQeueries import ADD_PRODUCT_QUERY, GET_SEARCHED_PRODUCTS_QUERY
@@ -29,7 +29,7 @@ class database:
         self.connection = sqlite3.connect(db_path)
         self.cursor = self.connection.cursor()
 
-        self.supermarketa = supermarket.supermarketA(self)
+        self.supermarketa = supermarketA(self)
         self.create_tables()
 
     def log(self, action):

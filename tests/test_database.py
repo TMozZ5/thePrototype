@@ -1,7 +1,7 @@
 import pytest
 from Database import database
 from Database import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
-#Test database.py
+#Test Database.py
 #author：bingrui li
 @pytest.fixture
 def db():

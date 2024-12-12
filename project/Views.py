@@ -4,7 +4,7 @@ within the Tkinter window."""
 import tkinter as tk
 from tkinter import ttk
 from Product import productInBasket, productInSearch
-from user import user
+from User import user
 
 class productsView:
 
