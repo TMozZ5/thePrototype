@@ -37,7 +37,7 @@ jobs:
 
       # IMPORTS
       - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$(pwd)/project" >> $GITHUB_ENV
+        run: echo "PYTHONPATH=project" >> $GITHUB_ENV
         
       # TEST
       - name: Run Tests
