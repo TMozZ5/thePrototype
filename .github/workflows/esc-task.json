@@ -1,5 +1,9 @@
 {
   "family": "prototype-task",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "256", 
+  "memory": "512",
   "containerDefinitions": [
     {
       "name": "prototype",
@@ -10,7 +14,8 @@
       "portMappings": [
         {
           "containerPort": 8000,
-          "hostPort": 8000
+          "hostPort": 8000,
+          "protocol": "tcp"
         }
       ]
     }
