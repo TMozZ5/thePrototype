@@ -61,7 +61,7 @@ class TestProductInView:
     #Test the database quantity update.
     def test_update_quantity_database(self, sample_product_in_view):
         sample_product_in_view.update_quantity_database()
-        sample_product_in_view.Database.update_quantity.assert_called_once_with(
+        sample_product_in_view.database.update_quantity.assert_called_once_with(
             sample_product_in_view.basket_id,
             sample_product_in_view.id,
             sample_product_in_view.quantity
@@ -90,7 +90,7 @@ class TestProductInBasket:
         sample_product_in_basket.update_quantity(mock_label, 1, mock_container)
         
         assert sample_product_in_basket.quantity == 2
-        sample_product_in_basket.Database.update_quantity.assert_called_once()
+        sample_product_in_basket.database.update_quantity.assert_called_once()
         sample_product_in_basket.basket_view.update_total_price.assert_called_once()
 
     #Test removing a product (quantity is 0).
@@ -102,12 +102,12 @@ class TestProductInBasket:
         
         assert sample_product_in_basket.quantity == 0
         mock_container.destroy.assert_called_once()
-        sample_product_in_basket.Database.remove_product_from_basket.assert_called_once()
+        sample_product_in_basket.database.remove_product_from_basket.assert_called_once()
 
     #Test the remove product functionality
     def test_remove_product(self, sample_product_in_basket):
         sample_product_in_basket.remove_product()
-        sample_product_in_basket.Database.remove_product_from_basket.assert_called_once_with(
+        sample_product_in_basket.database.remove_product_from_basket.assert_called_once_with(
             sample_product_in_basket.basket_id,
             sample_product_in_basket.id
         )
@@ -120,12 +120,12 @@ class TestProductInSearch:
     def test_update_database_with_positive_quantity(self, sample_product_in_search):
         sample_product_in_search.quantity = 1
         sample_product_in_search.update_database()
-        sample_product_in_search.Database.add_product_to_basket.assert_called_once()
+        sample_product_in_search.database.add_product_to_basket.assert_called_once()
 
     def test_update_database_with_zero_quantity(self, sample_product_in_search):
         sample_product_in_search.quantity = 0
         sample_product_in_search.update_database()
-        sample_product_in_search.Database.add_product_to_basket.assert_not_called()
+        sample_product_in_search.database.add_product_to_basket.assert_not_called()
 
     def test_update_quantity_add(self, sample_product_in_search):
         mock_label = Mock()
@@ -134,7 +134,7 @@ class TestProductInSearch:
         sample_product_in_search.update_quantity(mock_label, 1, mock_container)
         
         assert sample_product_in_search.quantity == 2
-        sample_product_in_search.Database.add_product_to_basket.assert_called_once()
+        sample_product_in_search.database.add_product_to_basket.assert_called_once()
         sample_product_in_search.basket_view.update_search_price.assert_called_once()
 
     #Test decreasing quantity to 0.
@@ -145,5 +145,5 @@ class TestProductInSearch:
         sample_product_in_search.update_quantity(mock_label, -1, mock_container)
         
         assert sample_product_in_search.quantity == 0
-        sample_product_in_search.Database.remove_product_from_basket.assert_called_once()
+        sample_product_in_search.database.remove_product_from_basket.assert_called_once()
         sample_product_in_search.basket_view.update_search_price.assert_called_once()
