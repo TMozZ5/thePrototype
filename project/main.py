@@ -1,3 +1,6 @@
+"""Main module that when run will run the application.
+Author: Ben Thompson"""
+
 import logging
 import tkinter as tk
 import atexit
@@ -7,9 +10,6 @@ from Views import BasketView
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
-
-"""Main module that when run will run the application.
-Author: Ben Thompson"""
 
 db = Database()
 

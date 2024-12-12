@@ -1,11 +1,13 @@
+"""Contains child and parent methods to display products on screen."""
+
 import os
 import tkinter as tk
 from PIL import Image, ImageTk
 
 class ProductInView:
 
-    # parent class for products both in search window and basket window
-    # author: Ben Thompson
+    """Parent class for products in both search and basket view.
+    Author: Ben Thompson"""
 
     def __init__(self, database, product_id, product_name, image_url, quantity, price, promotion, basket_view):
 
@@ -15,25 +17,46 @@ class ProductInView:
         self.id, self.name, self.image_url = product_id, product_name, image_url
         self.quantity, self.promotion, self.price = quantity, promotion, price
 
-    # updates quantity label, called on button press from up and down button
     def update_quantity_label(self, label):
+
+        """
+        Updates quantity label, called on button press from up and down quantity
+        :param label: label object to change txt
+        :return: None
+        """
+
         label.config(text=str(self.quantity))
 
-    # updates the change in quantity in database
     def update_quantity_database(self):
+
+        """
+        Updates the change in quantity within the database.
+        :return: None
+        """
+
         self.database.update_quantity(self.basket_id, self.id, self.quantity)
 
-    # overwritten in child functions, used to declare parameters
-    def update_quantity(self, label, quantity, container):
+    def update_quantity(self, label, delta, container):
+
+        """
+        Overwritten in child functions, used to declare parameters.
+        """
         return None
 
-    # returns the total cost of all products of one type in basket
     def get_cost(self):
+        """
+        :return: int of the total cost of all products of this type in basket
+        """
         return self.price * self.quantity
 
-    # preprocesses image from url to tk image object
-    # returns ImageTk object ready to be drawn to screen
+
     def display_image(self, image_location):
+
+        """
+        Preprocesses image from url to Tk image object
+        :param image_location: string for location in directory of image
+        :return: ImageTk object for photo
+        """
 
         image = Image.open(os.getcwd() + image_location)
         image = image.resize((100, 100))
@@ -41,8 +64,13 @@ class ProductInView:
 
         return photo
 
-    # called from each individual product object to display details on screen
     def product_listing(self, frame):
+
+        """
+        Called from each individual product to display details on screen.
+        :param frame: scrollable frame object
+        :return: None
+        """
 
         # individual container for products image, details, price etc...
         product_container = tk.Frame(frame, padx=5, pady=5, relief=tk.RIDGE, borderwidth=2)
@@ -82,16 +110,25 @@ class ProductInView:
 
 class ProductInBasket(ProductInView):
 
-    # object called when a product is to be displayed in basket view
-    # inherits ProductInView
-    # author:
+    """Object called when a product is to be dispalyed in BasketView.
+    Inherits ProductsInView.
+    Author: Ben Thompson"""
 
     def __init__(self, database, product_id, product_name, image_url, quantity, price, promotion, basket_view):
         super().__init__(database, product_id, product_name, image_url, quantity, price, promotion, basket_view)
 
-    # method to update quantity and deal with side effects when called from basket
-    def update_quantity(self, label, change, container):
-        self.quantity += change
+    def update_quantity(self, label, delta, container):
+
+        """
+        Overwrites inherited function. Updates quantity and deals with side
+        effects when called from Basket.
+        :param label: label object containing number of products in basket, to change
+        :param change: +/- number of change to quantity
+        :param container: container object to remove product from if search reaches zero
+        :return: None
+        """
+
+        self.quantity += delta
         if self.quantity <= 0:
             # removes product from frame if quantity reached zero
             container.destroy()
@@ -110,23 +147,41 @@ class ProductInBasket(ProductInView):
 
 class ProductInSearch(ProductInView):
 
-    # object called when a product is to be displayed in search view
-    # inherits ProductInView
-    # author:
+    """
+    Object called when a product is to be displayed in SearchView.
+    Inherits ProductInView.
+    Author: Ben Thompson
+    """
 
     def __init__(self, database, product_id, product_name, image_url, quantity, price, promotion, basket_view):
         super().__init__(database, product_id, product_name, image_url, quantity, price, promotion, basket_view)
 
-    # method to update quantity, adds to basket_contains table if quantity is greater than zero
-    # updates record if it already exists in table
     def update_database(self):
+
+        """
+        Method to update quantity in database. Adds new record, or updated quanity
+        if it already exists.
+        :return: None
+        """
+
         if self.quantity > 0:
             self.database.add_product_to_basket(self.basket_id, self.id, self.quantity)
 
     # overwrites inherited function, hence redundant container
     # calls add to basket function if quantity greater than zero, else remove product function
-    def update_quantity(self, label, change, container):
-        self.quantity += change
+    def update_quantity(self, label, delta, container):
+
+        """
+        Overwrites inherited function, hence redundant container. Calls add to basket
+        function if quantity is greater than zero, else remove product function. Can
+        only be updated to quantity of zero if it already existed, so no remove
+        calls are made to records that don't exist.
+        :param label: label object containing number of products in basket, to change
+        :param change: +/- number of change to quantity
+        :param container: redundant
+        :return: None
+        """
+        self.quantity += delta
         if self.quantity > 0:
             self.database.add_product_to_basket(self.basket_id, self.id, self.quantity)
         elif self.quantity == 0:
@@ -134,4 +189,4 @@ class ProductInSearch(ProductInView):
 
         # updates quantity label and total price
         self.update_quantity_label(label)
-        self.basket_view.update_search_price(change * self.price)
+        self.basket_view.update_search_price(delta * self.price)

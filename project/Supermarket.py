@@ -1,3 +1,5 @@
+"""Contains parent and child objects to interact with supermakets."""
+
 import json
 import os
 import logging
@@ -10,8 +12,8 @@ logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
 
 class Supermarket:
 
-    # parent supermarket function, inherited by individual supermarket objects
-    # author: Saibo Guo
+    """Parent supermarket function. Inherited from individual supermarkets.
+    Author: Saibo Guo"""
 
     def __init__(self, database):
 
@@ -26,21 +28,40 @@ class Supermarket:
 
 
     def make_directory(self):
+
+        """
+        Makes a directory if it does not already exist for images.
+        :return: None
+        """
+
         os.makedirs(f"{os.getcwd()}/data/images/{self.supermarket_name}/", exist_ok=True)
 
     def download_image(self, url, product_id):
+        """
+        Downloads images using helper method.
+        :param url: string location of image on internet
+        :param product_id: string product_id to add to extension to save
+        :return: string extension of cwd to record in db
+        """
         print("opened download image once")
         extension = f"/data/images/{self.supermarket_name}/{product_id}.png"
         download_image(url, extension)
         return extension
 
     def process_book(self):
-        # overwritten in child functions
+
+        """Overwritten in child functions."""
+
         return None
 
     def get_recent_database_update(self):
 
-        base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+        """
+        Gets last timestamp for processing supermarket data.
+        :return: string for a timestamp
+        """
+
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, "logs/data_updates.json")
 
         # gets the timestamp held in json log file for last database_update for child supermarket object
@@ -51,6 +72,9 @@ class Supermarket:
                 return datetime.strptime(record['timestamp'], "%Y-%m-%d %H:%M:%S")
 
     def record_database_update(self):
+
+        """Sets current timestamp for processing supermarket data.
+        :return: None"""
 
         base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
         file_path = os.path.join(base_dir, "logs/data_updates.json")
@@ -67,6 +91,11 @@ class Supermarket:
 
 class SupermarketA(Supermarket):
 
+    """
+    Object to interact with pretend supermarketA. Inherits Supermarket.
+    Author: SaiboGuo
+    """
+
     def __init__(self, database):
         self.supermarket_name = "supermarketa"
         self.supermarket_id = 1
@@ -75,21 +104,38 @@ class SupermarketA(Supermarket):
         self.make_directory()
 
     def get_data_book(self):
-        # since prototype, created example data source to use
-        # would expect a source file to be provided by partnering supermarket
-        # this function in that case would return the downloaded file from supermarket api
+
+        """
+        Since prototype, created example datasource to use. Would anticipate a
+        source file to be provided by partnering supermarket. This function in
+        that case would return directory of downloaded data sheet from
+        supermarket API.
+        :return: string for filepath
+        """
+
         base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
         file_path = os.path.join(base_dir, "data/supermarketa_stocklist_04122024.json")
         return file_path
 
     def read_book(self):
-        # reads json file into local variable
+
+        """
+        Reads JSON file into local variable.
+        :return: Dict of JSON data
+        """
+
         with open(self.get_data_book(), "r") as json_file:
             json_data = json.load(json_file)
         return json_data
 
     def process_book(self):
-        # iterates through json file extracting relevant product information, adding to list as tuples
+
+        """
+        Iterates through JSON file extracting relevant product information, adding
+        products to the database with relevant data.
+        :return: None
+        """
+
         for product in self.read_book():
             product_id = product["product_id"]
             image_url = product["image_url"]
@@ -100,9 +146,14 @@ class SupermarketA(Supermarket):
         logging.info("Processing JSON file, saving changes to Database.")
 
     def place_order(self, query):
-        # reformat data into json format as received, but only with product id and quantity
-        # simulates what would be posted to api
-        # returns verdict of whether order was placed successfully or not
+
+        """
+        Reformat data into JSON format as received, but with only product_id and quantity.
+        Simulates what would be posted to API
+        :param query: list of tuples (product_id, quantity)
+        :return: string verdict of whether order was placed successfully
+        """
+
         if sum(item[1] for item in query) >= 5:
             # jsn variable would be posted to api
             jsn = json.dumps([{"product_id": item[0], "quantity": item[1]} for item in query], indent=4)

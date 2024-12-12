@@ -1,9 +1,5 @@
+"""Contains User object import."""
 from Database import Database
-
-"""
-Contains User object import.
-"""
-
 
 class User:
 

@@ -1,3 +1,7 @@
+"""
+Helper functions used throughout the project.
+#Author: Bingrui Li"""
+
 import logging
 from io import BytesIO
 import json
@@ -8,12 +12,6 @@ from PIL import Image
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
-
-"""
-Helper functions used throughout the project.
-Author: Bingrui Li
-"""
-
 
 def get_order_split(file_path="logs/order_constants.json"):
 

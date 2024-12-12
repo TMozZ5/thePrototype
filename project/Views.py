@@ -1,10 +1,10 @@
+"""Contains both the module import used to facilitate views
+within the Tkinter window."""
+
 import tkinter as tk
 from tkinter import ttk
 from Product import ProductInBasket, ProductInSearch
 from User import User
-
-"""Contains both the module import used to facilitate views
-within the Tkinter window."""
 
 class ProductsView:
 
@@ -224,9 +224,8 @@ class BasketView (ProductsView):
         self.verdict_label = tk.Label(bottom_frame, text="")
         self.verdict_label.grid(row=1, column=1)
 
-        self.total_cost_label = tk.Label(bottom_frame,
-            text=f"£{(lambda: (self.calculate_total_cost(), self.total_cost)[1])()}",
-            anchor="e")
+        self.calculate_total_cost()
+        self.total_cost_label = tk.Label(bottom_frame, text=f"£{self.total_cost}", anchor="e")
         self.total_cost_label.grid(row=0, column=2, sticky="e", padx=5)
 
         # adds items contained in basket to view
@@ -264,7 +263,6 @@ class SearchView (ProductsView):
             product_quantities[product.id] = product.quantity
         self.basket_quantities = product_quantities
 
-    # method called when item is searched and the products displayed are to be changed
     def show_search(self, keyword, frame):
 
         """
