@@ -13,4 +13,3 @@ class User:
     # returns name associated with user_id in database
     def get_name(self):
         return Database().get_name(self.user_id)
-

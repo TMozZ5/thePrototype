@@ -1,7 +1,10 @@
-import json, os, requests
-from PIL import Image
 from io import BytesIO
 import logging
+import json
+import os
+import requests
+from PIL import Image
+
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
@@ -13,7 +16,7 @@ def get_order_split(file_path="logs/order_constants.json"):
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
     file_path = os.path.join(base_dir, file_path)
-    with open(file_path) as json_file:
+    with open(file_path, "r") as json_file:
         json_data = json.load(json_file)
     for constant in json_data:
         if constant["type"] == "order_split":
@@ -41,6 +44,4 @@ def download_image(url, filepath):
         return f"Image downloaded and saved as PNG: {filepath}"
 
     except requests.exceptions.RequestException as e:
-        return f"Error downloading image: {e}"
-    except Exception as e:
-        return f"Error: {e}"
+        return "Error downloading image: %s", e

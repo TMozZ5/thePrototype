@@ -1,9 +1,6 @@
 import os
 import tkinter as tk
 from PIL import Image, ImageTk
-from io import BytesIO
-import requests
-
 
 class ProductInView:
 

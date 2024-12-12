@@ -1,5 +1,6 @@
 import pytest
-import json, os
+import json
+import os
 from datetime import datetime, timedelta
 from Supermarket import SupermarketA
 from Database import Database

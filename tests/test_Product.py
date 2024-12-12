@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 from Product import ProductInView, ProductInBasket, ProductInSearch
 
 # test_product.py

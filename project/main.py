@@ -28,4 +28,3 @@ root.mainloop()
 # handles closing the program, commits and saves changes to database
 atexit.register(db.close_database)
 logging.info("Window instance closed.")
-

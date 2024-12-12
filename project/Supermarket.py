@@ -1,4 +1,5 @@
-import json, os
+import json
+import os
 import logging
 from datetime import datetime, timedelta
 from helpers import download_image
@@ -14,6 +15,8 @@ class Supermarket:
     def __init__(self, database):
 
         self.database = database
+        # overwritten in inherited objects
+        self.supermarket_name = ""
         # checks json log file to see last time json file updated and parsed
         # if it has been longer than two days, reprocess and record having done so in json log file
         if self.get_recent_database_update() < (datetime.now() - timedelta(days=2)):
@@ -82,7 +85,7 @@ class SupermarketA(Supermarket):
 
     def read_book(self):
         # reads json file into local variable
-        with open(self.get_data_book()) as json_file:
+        with open(self.get_data_book(), "r") as json_file:
             json_data = json.load(json_file)
         return json_data
 
@@ -95,7 +98,7 @@ class SupermarketA(Supermarket):
             image_location = self.download_image(image_url, product_id)
             self.database.add_new_product(
                 (product["product_id"], product["name"], image_location, product["promotion"], product["price"]))
-        logging.info(f"Processing JSON file, saving changes to Database.")
+        logging.info("Processing JSON file, saving changes to Database.")
 
     def place_order(self, query):
         # reformat data into json format as received, but only with product id and quantity
@@ -104,8 +107,6 @@ class SupermarketA(Supermarket):
         if sum(item[1] for item in query) >= 5:
             # jsn variable would be posted to api
             jsn = json.dumps([{"product_id": item[0], "quantity": item[1]} for item in query], indent=4)
-            logging.info(f"Simulating placing order with API. JSN post query: \n {jsn}")
+            logging.info("Simulating placing order with API. JSN post query: \n %s", jsn)
             return "Order placed successfully."
         return "Add at least five items to the order."
-
-

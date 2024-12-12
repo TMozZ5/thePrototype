@@ -91,7 +91,8 @@ class BasketView (ProductsView):
 
         # loops for all products, creating new object, adding to frame and appending to list
         for product in products:
-            prod = ProductInBasket(self.database, product[0], product[1], product[2], product[3], product[4], product[5], self)
+            prod = ProductInBasket(self.database, product[0], product[1],
+                                   product[2], product[3], product[4], product[5], self)
             prod.product_listing(frame)
             self.products.append(prod)
 
@@ -213,9 +214,7 @@ class SearchView (ProductsView):
                 quantity = self.basket_quantities[product[0]]
             else:
                 quantity = 0
-            prod = ProductInSearch(self.database, product[0], product[1], product[2], quantity, product[3], product[4], self.basket_view)
+            prod = ProductInSearch(self.database, product[0], product[1], product[2],
+                                   quantity, product[3], product[4], self.basket_view)
             prod.product_listing(frame)
             self.products.append(prod)
-
-
-
