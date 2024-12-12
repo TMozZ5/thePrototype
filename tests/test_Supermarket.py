@@ -18,7 +18,7 @@ def test_get_recent_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     last_update = supermarket.get_recent_database_update()
     
-    with open("logs/data_updates.json", "r") as f:
+    with open("../project/logs/data_updates.json", "r") as f:
         data = json.load(f)
 
     expected_timestamp = datetime.strptime(data[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
@@ -29,7 +29,7 @@ def test_record_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     supermarket.record_database_update()
 
-    with open("logs/data_updates.json", "r") as f:
+    with open("../project/logs/data_updates.json", "r") as f:
         data = json.load(f)
 
     updated_timestamp = datetime.strptime(data[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
