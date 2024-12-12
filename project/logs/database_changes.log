@@ -25,3 +25,12 @@
 2024-12-10 22:32:03,916 - Window instance created.
 2024-12-10 22:32:13,828 - Added product ID: 29 to basket ID :13 with quantity: 1.
 2024-12-10 22:32:14,781 - Window instance closed.
+2024-12-12 12:58:16,387 - No need to process supermarket JSON as ithas already been done within the past two days.
+2024-12-12 12:58:16,520 - No need to process supermarket JSON as ithas already been done within the past two days.
+2024-12-12 12:58:16,568 - Window instance created.
+2024-12-12 12:58:19,452 - Updated quantity: 2 for product ID: 29 from basket ID :13.
+2024-12-12 12:58:20,829 - Window instance closed.
+2024-12-12 12:58:22,239 - No need to process supermarket JSON as ithas already been done within the past two days.
+2024-12-12 12:58:22,349 - No need to process supermarket JSON as ithas already been done within the past two days.
+2024-12-12 12:58:22,374 - Window instance created.
+2024-12-12 12:58:23,567 - Window instance closed.

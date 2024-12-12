@@ -4,20 +4,20 @@ import sqlite3
 from datetime import datetime
 import logging
 
-import Supermarket
+import supermarket
 from SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
 from SQLQeueries import GET_USER_NAME
 from SQLQeueries import ADD_PRODUCT_QUERY, GET_SEARCHED_PRODUCTS_QUERY
 from SQLQeueries import CREATE_ORDER_QUERY, GET_CURRENT_ORDER_QUERY, COMPLETE_ORDER_QUERY
 from SQLQeueries import CREATE_BASKET_QUERY, GET_BASKET_ID_QUERY
-from SQLQeueries import ADD_PRODUCT_TO_BASKET_QUERY, DELETE_PRODUCT_CONTENTS_QUERY, UPDATE_QUANTITY_QUERY,\
-    GET_BASKET_CONTENTS_QUERY, GET_ORDER_QUERY
+from SQLQeueries import ADD_PRODUCT_TO_BASKET_QUERY, DELETE_PRODUCT_CONTENTS_QUERY,\
+    UPDATE_QUANTITY_QUERY, GET_BASKET_CONTENTS_QUERY, GET_ORDER_QUERY
 from helpers import get_order_split
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
-class Database:
+class database:
 
     """
     Database object for communicating with database file.
@@ -29,7 +29,7 @@ class Database:
         self.connection = sqlite3.connect(db_path)
         self.cursor = self.connection.cursor()
 
-        self.supermarketa = Supermarket.SupermarketA(self)
+        self.supermarketa = supermarket.supermarketA(self)
         self.create_tables()
 
     def log(self, action):
@@ -90,7 +90,8 @@ class Database:
         Creates new order on order table when there is no active order.
         :return: string of order_id
         """
-        self.cursor.execute(CREATE_ORDER_QUERY, (datetime.now().strftime('%Y%m%d'), get_order_split()))
+        self.cursor.execute(CREATE_ORDER_QUERY, (datetime.now().strftime('%Y%m%d'),
+                                                 get_order_split()))
         order_id = self.cursor.lastrowid
         self.log(f"New order record created with ID: {order_id}.")
         return order_id
@@ -116,7 +117,9 @@ class Database:
         :param current_order: string of current order_id
         :return: None
         """
-        self.cursor.execute(COMPLETE_ORDER_QUERY, (datetime.now().strftime('%Y%m%d'), current_order))
+
+        self.cursor.execute(COMPLETE_ORDER_QUERY, (datetime.now().strftime('%Y%m%d'),
+                                                   current_order))
         self.log(f"Order committed on ID:{current_order}.")
 
     def create_basket(self, order_id, user_id):
@@ -128,7 +131,8 @@ class Database:
         :return: string of new basket_id
         """
 
-        self.cursor.execute(CREATE_BASKET_QUERY, (user_id, order_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        self.cursor.execute(CREATE_BASKET_QUERY, (user_id, order_id,
+                                                  datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
         basket_id = self.cursor.lastrowid
         self.log(f"New basket ID: {basket_id} created on order ID: {order_id} for user  ID: {user_id}.")
         return basket_id
@@ -149,7 +153,6 @@ class Database:
             return self.create_basket(order_id, user_id)
         return str(basket_id[0])
 
-
     def add_product_to_basket(self, basket_id, product_id, quantity):
 
         """
@@ -161,7 +164,8 @@ class Database:
         :return: None
         """
 
-        self.cursor.execute(ADD_PRODUCT_TO_BASKET_QUERY, (basket_id, product_id, quantity,))
+        self.cursor.execute(ADD_PRODUCT_TO_BASKET_QUERY,
+                            (basket_id, product_id, quantity,))
         self.log(f"Added product ID: {product_id} to basket ID :{basket_id} with quantity: {quantity}.")
 
     def remove_product_from_basket(self, basket_id, product_id):

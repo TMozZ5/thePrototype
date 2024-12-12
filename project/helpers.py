@@ -7,8 +7,7 @@ from io import BytesIO
 import json
 import os
 import requests
-from PIL import Image
-
+from PIL import Image, UnidentifiedImageError
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
@@ -49,7 +48,7 @@ def download_image(url, filepath):
             return "File already exists: %s", filepath
 
         # Download the image
-        response = requests.get(url, stream=True)
+        response = requests.get(url, stream=True, timeout=10)
         response.raise_for_status()  # Raise HTTPError for bad responses (4xx and 5xx)
 
         # Open the image and convert it to PNG format
@@ -62,5 +61,9 @@ def download_image(url, filepath):
 
     except requests.exceptions.RequestException as e:
         return "Error downloading image: %s", e
+    except UnidentifiedImageError as e:
+        return f"Error processing the image: {e}"
+    except IOError as e:
+        return f"Error saving image to disk: {e}"
     except Exception as e:
         return "Error found of type: %s", e

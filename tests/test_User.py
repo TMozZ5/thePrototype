@@ -1,15 +1,15 @@
 import pytest
-from Database import Database
+from Database import database
 from SQLQeueries import USER_TABLE
 #Test User.py
 #author：bingrui li
 
 @pytest.fixture
 def db(): 
-    database = Database(":memory:")  
-    database.cursor.execute(USER_TABLE)   
-    database.connection.commit()
-    return database
+    db = database(":memory:")
+    db.cursor.execute(USER_TABLE)
+    db.connection.commit()
+    return db
 
 
 def test_user_get_name(db):

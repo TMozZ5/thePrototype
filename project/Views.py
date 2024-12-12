@@ -3,10 +3,10 @@ within the Tkinter window."""
 
 import tkinter as tk
 from tkinter import ttk
-from Product import ProductInBasket, ProductInSearch
-from User import User
+from Product import productInBasket, productInSearch
+from user import user
 
-class ProductsView:
+class productsView:
 
     """
     Parent class for views containing products. Inherited by
@@ -55,7 +55,7 @@ class ProductsView:
         for widget in frame.winfo_children():
             widget.destroy()
 
-class BasketView (ProductsView):
+class basketView (productsView):
 
     """
     Object used to create a view for a shopping basket.
@@ -66,13 +66,13 @@ class BasketView (ProductsView):
     def __init__(self, database, root, user_id):
         super().__init__(database, root)
 
-        user = User(user_id)
-        self.user_id, self.user_name = user_id, user.get_name()
+        us = user(user_id)
+        self.user_id, self.user_name = user_id, us.get_name()
         # sets basket_id when program is first launched
         self.get_current_basket()
 
         # create search view object to switch to when a product is searched
-        self.search_view = SearchView(database, root, user_id, self)
+        self.search_view = searchView(database, root, user_id, self)
         # scroll frame object, used to contain both products in basket and products in search
         self.scrollable_frame = self.scroll_frame()
         self.total_cost = 0
@@ -135,7 +135,7 @@ class BasketView (ProductsView):
 
         # loops for all products, creating new object, adding to frame and appending to list
         for product in products:
-            prod = ProductInBasket(self.database, product[0], product[1],
+            prod = productInBasket(self.database, product[0], product[1],
                                    product[2], product[3], product[4], product[5], self)
             prod.product_listing(frame)
             self.products.append(prod)
@@ -232,7 +232,7 @@ class BasketView (ProductsView):
         self.show_basket(self.scrollable_frame)
 
 
-class SearchView (ProductsView):
+class searchView (productsView):
 
     """
     Object used to build search view.
@@ -287,7 +287,7 @@ class SearchView (ProductsView):
                 quantity = self.basket_quantities[product[0]]
             else:
                 quantity = 0
-            prod = ProductInSearch(self.database, product[0], product[1], product[2],
+            prod = productInSearch(self.database, product[0], product[1], product[2],
                                    quantity, product[3], product[4], self.basket_view)
             prod.product_listing(frame)
             self.products.append(prod)

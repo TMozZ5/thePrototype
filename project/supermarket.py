@@ -10,7 +10,7 @@ logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
 
-class Supermarket:
+class supermarket:
 
     """Parent supermarket function. Inherited from individual supermarkets.
     Author: Saibo Guo"""
@@ -24,7 +24,8 @@ class Supermarket:
             self.process_book()
             self.record_database_update()
         else:
-            logging.info("No need to process supermarket JSON as it has already been done within the past two days.")
+            logging.info("No need to process supermarket JSON as it"
+                         "has already been done within the past two days.")
 
 
     def make_directory(self):
@@ -64,12 +65,15 @@ class Supermarket:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, "logs/data_updates.json")
 
-        # gets the timestamp held in json log file for last database_update for child supermarket object
-        with open(file_path, "r") as json_file:
+        # gets the timestamp held in json log file for
+        # last database_update for child supermarket object
+        with open(file_path, "r", encoding="utf-8") as json_file:
             json_data = json.load(json_file)
         for record in json_data:
-            if record["event_type"] == "database_update" and record["supermarket"] == self.supermarket_name:
+            if record["event_type"] == "database_update" and \
+                    record["supermarket"] == self.supermarket_name:
                 return datetime.strptime(record['timestamp'], "%Y-%m-%d %H:%M:%S")
+        return None
 
     def record_database_update(self):
 
@@ -79,17 +83,19 @@ class Supermarket:
         base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
         file_path = os.path.join(base_dir, "logs/data_updates.json")
 
-        # puts the current timestamp in json log file for database_update for child supermarket object
-        with open(file_path, "r") as json_file:
+        # puts the current timestamp in json log file
+        # for database_update for child supermarket object
+        with open(file_path, "r", encoding="utf-8") as json_file:
             json_data = json.load(json_file)
         for record in json_data:
-            if record["event_type"] == "database_update" and record["supermarket"] == self.supermarket_name:
+            if record["event_type"] == "database_update" and \
+                    record["supermarket"] == self.supermarket_name:
                 record["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         with open(file_path, "w") as json_file:
             json.dump(json_data, json_file)
 
 
-class SupermarketA(Supermarket):
+class supermarketA(supermarket):
 
     """
     Object to interact with pretend supermarketA. Inherits Supermarket.
@@ -113,7 +119,7 @@ class SupermarketA(Supermarket):
         :return: string for filepath
         """
 
-        base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+        base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, "data/supermarketa_stocklist_04122024.json")
         return file_path
 
@@ -124,7 +130,7 @@ class SupermarketA(Supermarket):
         :return: Dict of JSON data
         """
 
-        with open(self.get_data_book(), "r") as json_file:
+        with open(self.get_data_book(), "r", encoding="utf-8") as json_file:
             json_data = json.load(json_file)
         return json_data
 
@@ -142,7 +148,8 @@ class SupermarketA(Supermarket):
             # check if already in dir
             image_location = self.download_image(image_url, product_id)
             self.database.add_new_product(
-                (product["product_id"], product["name"], image_location, product["promotion"], product["price"]))
+                (product["product_id"], product["name"], image_location,
+                 product["promotion"], product["price"]))
         logging.info("Processing JSON file, saving changes to Database.")
 
     def place_order(self, query):
@@ -156,7 +163,8 @@ class SupermarketA(Supermarket):
 
         if sum(item[1] for item in query) >= 5:
             # jsn variable would be posted to api
-            jsn = json.dumps([{"product_id": item[0], "quantity": item[1]} for item in query], indent=4)
+            jsn = json.dumps([{"product_id": item[0],
+                               "quantity": item[1]} for item in query], indent=4)
             logging.info("Simulating placing order with API. JSN post query: \n %s", jsn)
             return "Order placed successfully."
         return "Add at least five items to the order."

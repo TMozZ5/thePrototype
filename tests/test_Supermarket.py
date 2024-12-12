@@ -2,21 +2,21 @@ import pytest
 import json
 import os
 from datetime import datetime, timedelta
-from Supermarket import SupermarketA
-from Database import Database
+from Supermarket import supermarketA
+from Database import database
 
     # Test Supermarket.py
     # author: Saibo Guo
 
 @pytest.fixture
 def db():
-    database = Database(":memory:") 
-    database.create_tables()  
-    return database
+    db = database(":memory:")
+    db.create_tables()
+    return db
 
 
 def test_get_recent_database_update():
-    supermarket = SupermarketA(Database(":memory:"))
+    supermarket = supermarketA(database(":memory:"))
     last_update = supermarket.get_recent_database_update()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
@@ -31,7 +31,7 @@ def test_get_recent_database_update():
 
 
 def test_record_database_update():
-    supermarket = SupermarketA(Database(":memory:"))
+    supermarket = supermarketA(database(":memory:"))
     supermarket.record_database_update()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
@@ -47,18 +47,18 @@ def test_record_database_update():
 
 
 def test_get_data_book():
-    supermarket = SupermarketA(Database(":memory:"))
+    supermarket = supermarketA(database(":memory:"))
     data_book = supermarket.get_data_book()
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
     project_dir = os.path.abspath(os.path.join(base_dir, "../project"))
-    file_path = os.path.join(project_dir, "data/supermarketa_stocklist_04122024.json")
+    file_path = os.path.join(project_dir, "data/supermarketA_stocklist_04122024.json")
 
     assert data_book == file_path, "Data book path is incorrect."
 
 
 def test_read_book():
-    supermarket = SupermarketA(Database(":memory:"))
+    supermarket = supermarketA(database(":memory:"))
     products = supermarket.read_book()
 
     assert len(products) > 0, "No products were read from the JSON file."
@@ -66,7 +66,7 @@ def test_read_book():
 
 
 def test_process_book(db):
-    supermarket = SupermarketA(db)
+    supermarket = supermarketA(db)
     supermarket.process_book()
 
     db.cursor.execute("SELECT * FROM product WHERE product_id = ?", ("001",))
@@ -77,7 +77,7 @@ def test_process_book(db):
 
 
 def test_place_order():
-    supermarket = SupermarketA(Database(":memory:"))
+    supermarket = supermarketA(database(":memory:"))
 
     result = supermarket.place_order([
         ("001", 3),

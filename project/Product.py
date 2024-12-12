@@ -4,12 +4,13 @@ import os
 import tkinter as tk
 from PIL import Image, ImageTk
 
-class ProductInView:
+class productInView:
 
     """Parent class for products in both search and basket view.
     Author: Ben Thompson"""
 
-    def __init__(self, database, product_id, product_name, image_url, quantity, price, promotion, basket_view):
+    def __init__(self, database, product_id, product_name, image_url,
+                 quantity, price, promotion, basket_view):
 
         self.database = database
         self.basket_view, self.basket_id = basket_view, basket_view.basket_id
@@ -97,25 +98,29 @@ class ProductInView:
         quantity_label.pack(side=tk.LEFT, padx=2)
 
         minus_button = tk.Button(quantity_frame, text="-",
-                                 command=lambda: self.update_quantity(quantity_label, -1, product_container))
+                                 command=lambda: self.update_quantity(quantity_label,
+                                                                      -1, product_container))
         minus_button.pack(side=tk.LEFT, padx=2)
 
         plus_button = tk.Button(quantity_frame, text="+",
-                                command=lambda: self.update_quantity(quantity_label, 1, product_container))
+                                command=lambda: self.update_quantity(quantity_label,
+                                                                     1, product_container))
         plus_button.pack(side=tk.LEFT, padx=2)
 
         price = tk.Label(product_container, text=self.price, font=("Arial", 12))
         price.pack(side=tk.RIGHT, padx=5)
 
 
-class ProductInBasket(ProductInView):
+class productInBasket(productInView):
 
     """Object called when a product is to be dispalyed in BasketView.
     Inherits ProductsInView.
     Author: Ben Thompson"""
 
-    def __init__(self, database, product_id, product_name, image_url, quantity, price, promotion, basket_view):
-        super().__init__(database, product_id, product_name, image_url, quantity, price, promotion, basket_view)
+    def __init__(self, database, product_id, product_name, image_url,
+                 quantity, price, promotion, basket_view):
+        super().__init__(database, product_id, product_name, image_url,
+                         quantity, price, promotion, basket_view)
 
     def update_quantity(self, label, delta, container):
 
@@ -140,12 +145,17 @@ class ProductInBasket(ProductInView):
         # updates new total price based on updated basket
         self.basket_view.update_total_price()
 
-    # calls database object to remove basket_contains record
     def remove_product(self):
+
+        """
+        Calls database object to remove basket_contents method.
+        :return: None
+        """
+
         self.database.remove_product_from_basket(self.basket_id, self.id)
 
 
-class ProductInSearch(ProductInView):
+class productInSearch(productInView):
 
     """
     Object called when a product is to be displayed in SearchView.
@@ -153,8 +163,10 @@ class ProductInSearch(ProductInView):
     Author: Ben Thompson
     """
 
-    def __init__(self, database, product_id, product_name, image_url, quantity, price, promotion, basket_view):
-        super().__init__(database, product_id, product_name, image_url, quantity, price, promotion, basket_view)
+    def __init__(self, database, product_id, product_name, image_url,
+                 quantity, price, promotion, basket_view):
+        super().__init__(database, product_id, product_name, image_url,
+                         quantity, price, promotion, basket_view)
 
     def update_database(self):
 

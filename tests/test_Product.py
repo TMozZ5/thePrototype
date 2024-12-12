@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import Mock
-from Product import ProductInView, ProductInBasket, ProductInSearch
+from Product import productInView, productInBasket, productInSearch
 
 # test_product.py
 # author: Saibo Guo
@@ -30,18 +30,18 @@ def base_product_params(mock_database, mock_basket_view):
 
 @pytest.fixture
 def sample_product_in_view(base_product_params):
-    return ProductInView(**base_product_params)
+    return productInView(**base_product_params)
 
 @pytest.fixture
 def sample_product_in_basket(base_product_params):
-    return ProductInBasket(**base_product_params)
+    return productInBasket(**base_product_params)
 
 @pytest.fixture
 def sample_product_in_search(base_product_params):
-    return ProductInSearch(**base_product_params)
+    return productInSearch(**base_product_params)
 
 #Test whether the initialization correctly sets all attributes.
-class TestProductInView:
+class TestproductInView:
     def test_init(self, sample_product_in_view, base_product_params):
         assert sample_product_in_view.id == base_product_params['product_id']
         assert sample_product_in_view.name == base_product_params['product_name']
@@ -78,7 +78,7 @@ class TestProductInView:
         sample_product_in_view.price = 10.0
         assert sample_product_in_view.get_cost() == 30.0
 
-class TestProductInBasket:
+class TestproductInBasket:
     def test_init(self, sample_product_in_basket, base_product_params):
         assert sample_product_in_basket.id == base_product_params['product_id']
         assert sample_product_in_basket.name == base_product_params['product_name']
@@ -112,7 +112,7 @@ class TestProductInBasket:
             sample_product_in_basket.id
         )
 
-class TestProductInSearch:
+class TestproductInSearch:
     def test_init(self, sample_product_in_search, base_product_params):
         assert sample_product_in_search.id == base_product_params['product_id']
         assert sample_product_in_search.name == base_product_params['product_name']
