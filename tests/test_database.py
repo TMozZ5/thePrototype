@@ -1,11 +1,11 @@
 import pytest
-from Database import Database
-from SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
+from database import Database
+from database import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
 #Test database.py
 #author：bingrui li
 @pytest.fixture
 def db():
-    database = Database(":memory:") 
+    database = Database(":memory:")
     database.cursor.execute(USER_TABLE)
     database.cursor.execute(PRODUCT_TABLE)
     database.cursor.execute(ORDER_TABLE)

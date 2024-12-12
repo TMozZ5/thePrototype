@@ -53,7 +53,8 @@ ON CONFLICT(product_id) DO UPDATE SET
     promotion = excluded.promotion,
     price = excluded.price;
 """
-GET_SEARCHED_PRODUCTS_QUERY = """SELECT product_id, name, image_url, price, promotion FROM product WHERE LOWER(name) LIKE '%' || LOWER(?) || '%';"""
+GET_SEARCHED_PRODUCTS_QUERY = """SELECT product_id, name, image_url, price, promotion 
+FROM product WHERE LOWER(name) LIKE '%' || LOWER(?) || '%';"""
 
 # queries for order table
 CREATE_ORDER_QUERY = """INSERT INTO `order`(date_created, date_placed, fee_split)  VALUES (?, 0, ?)"""
@@ -70,7 +71,8 @@ ADD_PRODUCT_TO_BASKET_QUERY = """INSERT INTO basket_contents VALUES (?, ?, ?)
         quantity = excluded.quantity"""
 UPDATE_QUANTITY_QUERY = """UPDATE basket_contents SET quantity = ? WHERE basket_id = ? AND product_id = ?"""
 DELETE_PRODUCT_CONTENTS_QUERY = """DELETE FROM basket_contents WHERE basket_id = ? AND product_id = ?"""
-GET_BASKET_CONTENTS_QUERY = """SELECT product.product_id, product.name, product.image_url, basket_contents.quantity, product.price,product.promotion
+GET_BASKET_CONTENTS_QUERY = """SELECT product.product_id, product.name, 
+product.image_url, basket_contents.quantity, product.price,product.promotion
     FROM basket_contents
     JOIN product ON basket_contents.product_id = product.product_id
     WHERE basket_contents.basket_id = ?;"""

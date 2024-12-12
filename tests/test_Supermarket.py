@@ -1,24 +1,29 @@
 import pytest
 import json
+import os
 from datetime import datetime, timedelta
-from Supermarket import SupermarketA
-from Database import Database
+from supermarket import SupermarketA
+from database import Database
 
     # Test Supermarket.py
     # author: Saibo Guo
 
 @pytest.fixture
 def db():
-    database = Database(":memory:") 
-    database.create_tables()  
+    database = Database(":memory:")
+    database.create_tables()
     return database
 
 
 def test_get_recent_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     last_update = supermarket.get_recent_database_update()
-    
-    with open("logs/data_updates.json", "r") as f:
+
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
+    project_dir = os.path.abspath(os.path.join(base_dir, "../project"))
+    file_path = os.path.join(project_dir, "logs/data_updates.json")
+
+    with open(file_path, "r") as f:
         data = json.load(f)
 
     expected_timestamp = datetime.strptime(data[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
@@ -29,7 +34,11 @@ def test_record_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     supermarket.record_database_update()
 
-    with open("logs/data_updates.json", "r") as f:
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
+    project_dir = os.path.abspath(os.path.join(base_dir, "../project"))
+    file_path = os.path.join(project_dir, "logs/data_updates.json")
+
+    with open(file_path, "r") as f:
         data = json.load(f)
 
     updated_timestamp = datetime.strptime(data[0]["timestamp"], "%Y-%m-%d %H:%M:%S")
@@ -41,7 +50,11 @@ def test_get_data_book():
     supermarket = SupermarketA(Database(":memory:"))
     data_book = supermarket.get_data_book()
 
-    assert data_book == "data/supermarketa_stocklist_04122024.json", "Data book path is incorrect."
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
+    project_dir = os.path.abspath(os.path.join(base_dir, "../project"))
+    file_path = os.path.join(project_dir, "data/supermarketa_stocklist_04122024.json")
+
+    assert data_book == file_path, "Data book path is incorrect."
 
 
 def test_read_book():
