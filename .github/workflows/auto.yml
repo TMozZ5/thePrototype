@@ -76,6 +76,7 @@ jobs:
           task-definition: ".github/workflows/esc-task.json"
           service: prototype-service
           cluster: prototype-cluster
+          launch-type: FARGATE
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
