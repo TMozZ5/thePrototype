@@ -15,8 +15,6 @@ class Supermarket:
     def __init__(self, database):
 
         self.database = database
-        # overwritten in inherited objects
-        self.supermarket_name = ""
         # checks json log file to see last time json file updated and parsed
         # if it has been longer than two days, reprocess and record having done so in json log file
         if self.get_recent_database_update() < (datetime.now() - timedelta(days=2)):
