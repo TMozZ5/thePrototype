@@ -1,9 +1,10 @@
+import logging
+from io import BytesIO
 import json
 import os
 import requests
 from PIL import Image
-from io import BytesIO
-import logging
+
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
@@ -44,3 +45,6 @@ def download_image(url, filepath):
 
     except requests.exceptions.RequestException as e:
         return "Error downloading image: %s", e
+    except Exception as e:
+        return "Error found of type: %s", e
+    
