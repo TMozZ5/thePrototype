@@ -19,7 +19,7 @@ class Database:
 
     # database object for communicating with database file
     # when application closes, close_database function is called to commit changes
-    # author:
+    # author: Thomas Morris
 
     def __init__(self, db_path="SSHsystem.db"):
         self.connection = sqlite3.connect(db_path)
