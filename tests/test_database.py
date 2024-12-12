@@ -1,5 +1,5 @@
 import pytest
-from project.Database import Database
+from Database import Database
 from Database import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
 #Test database.py
 #author：bingrui li
