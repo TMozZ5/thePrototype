@@ -46,11 +46,8 @@ class Supermarket:
 
     def record_database_update(self):
 
-        # determines filepath when run in docker container
-        base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
-        file_path = os.path.join(base_dir, "logs/data_updates.json")
         # puts the current timestamp in json log file for database_update for child supermarket object
-        with open(file_path, "r") as json_file:
+        with open("../project/logs/data_updates.json", "r") as json_file:
             json_data = json.load(json_file)
         for record in json_data:
             if record["event_type"] == "database_update" and record["supermarket"] == self.supermarket_name:
