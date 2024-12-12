@@ -4,7 +4,7 @@ import os
 import tkinter as tk
 from PIL import Image, ImageTk
 
-class productInView:
+class ProductInView:
 
     """Parent class for products in both search and basket view.
     Author: Ben Thompson"""
@@ -111,7 +111,7 @@ class productInView:
         price.pack(side=tk.RIGHT, padx=5)
 
 
-class productInBasket(productInView):
+class ProductInBasket(ProductInView):
 
     """Object called when a product is to be dispalyed in BasketView.
     Inherits ProductsInView.
@@ -155,7 +155,7 @@ class productInBasket(productInView):
         self.database.remove_product_from_basket(self.basket_id, self.id)
 
 
-class productInSearch(productInView):
+class ProductInSearch(ProductInView):
 
     """
     Object called when a product is to be displayed in SearchView.
