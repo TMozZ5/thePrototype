@@ -52,7 +52,7 @@ def test_get_data_book():
 
     base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
     project_dir = os.path.abspath(os.path.join(base_dir, "../project"))
-    file_path = os.path.join(project_dir, "data/supermarketA_stocklist_04122024.json")
+    file_path = os.path.join(project_dir, "data/supermarketa_stocklist_04122024.json")
 
     assert data_book == file_path, "Data book path is incorrect."
 
