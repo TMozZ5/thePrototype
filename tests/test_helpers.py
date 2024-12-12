@@ -1,5 +1,9 @@
 import pytest
 import json
+import os, sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../project')))
+
 from project.helpers import get_order_split
 #Test helper.py
 #author：bingrui li
