@@ -18,8 +18,9 @@ def test_get_recent_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     last_update = supermarket.get_recent_database_update()
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
-    file_path = os.path.join(base_dir, "logs/data_updates.json")
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
+    project_dir = os.path.abspath(os.path.join(base_dir, "../project"))
+    file_path = os.path.join(project_dir, "logs/data_updates.json")
 
     with open(file_path, "r") as f:
         data = json.load(f)
@@ -32,8 +33,9 @@ def test_record_database_update():
     supermarket = SupermarketA(Database(":memory:"))
     supermarket.record_database_update()
 
-    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
-    file_path = os.path.join(base_dir, "logs/data_updates.json")
+    base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current test file
+    project_dir = os.path.abspath(os.path.join(base_dir, "../project"))
+    file_path = os.path.join(project_dir, "logs/data_updates.json")
 
     with open(file_path, "r") as f:
         data = json.load(f)
