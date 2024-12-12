@@ -37,8 +37,12 @@ class Supermarket:
         return None
 
     def get_recent_database_update(self):
+
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+        file_path = os.path.join(base_dir, "logs/data_updates.json")
+
         # gets the timestamp held in json log file for last database_update for child supermarket object
-        with open("../project/logs/data_updates.json", "r") as json_file:
+        with open(file_path, "r") as json_file:
             json_data = json.load(json_file)
         for record in json_data:
             if record["event_type"] == "database_update" and record["supermarket"] == self.supermarket_name:
@@ -46,13 +50,16 @@ class Supermarket:
 
     def record_database_update(self):
 
+        base_dir = os.path.dirname(os.path.abspath(__file__))  # Directory of the current script
+        file_path = os.path.join(base_dir, "logs/data_updates.json")
+
         # puts the current timestamp in json log file for database_update for child supermarket object
-        with open("../project/logs/data_updates.json", "r") as json_file:
+        with open(file_path, "r") as json_file:
             json_data = json.load(json_file)
         for record in json_data:
             if record["event_type"] == "database_update" and record["supermarket"] == self.supermarket_name:
                 record["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open("../project/logs/data_updates.json", "w") as json_file:
+        with open(file_path, "w") as json_file:
             json.dump(json_data, json_file)
 
 
