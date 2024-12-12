@@ -5,6 +5,8 @@ import atexit
 from Database import Database
 from Views import BasketView
 
+# Author: Ben Thompson
+
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
