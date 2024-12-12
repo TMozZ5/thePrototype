@@ -1,8 +1,8 @@
 import pytest
 import json
 from datetime import datetime, timedelta
-from Supermarket import SupermarketA
-from Database import Database
+from project.Supermarket import SupermarketA
+from project.Database import Database
 
     # Test Supermarket.py
     # author: Saibo Guo

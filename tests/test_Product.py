@@ -1,11 +1,10 @@
 import pytest
 from unittest.mock import Mock, patch
-import tkinter as tk
-from io import BytesIO
-from Product import ProductInView, ProductInBasket, ProductInSearch
+from project.Product import ProductInView, ProductInBasket, ProductInSearch
 
-    # Test Product.py
-    # author: Saibo Guo
+# test_product.py
+# author: Saibo Guo
+
 @pytest.fixture
 def mock_database():
     return Mock()

@@ -1,6 +1,6 @@
 import pytest
-from Database import Database
-from SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
+from project.Database import Database
+from project.SQLQeueries import USER_TABLE, PRODUCT_TABLE, ORDER_TABLE, BASKET_TABLE, BASKET_CONTAINS_TABLE
 #Test database.py
 #author：bingrui li
 @pytest.fixture

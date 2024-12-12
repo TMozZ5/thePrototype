@@ -1,6 +1,6 @@
 import pytest
 import json
-from helpers import get_order_split
+from project.helpers import get_order_split
 #Test helper.py
 #author：bingrui li
 @pytest.fixture

@@ -1,7 +1,6 @@
 import pytest
-from User import User
-from Database import Database
-from SQLQeueries import USER_TABLE
+from project.Database import Database
+from project.SQLQeueries import USER_TABLE
 #Test User.py
 #author：bingrui li
 
