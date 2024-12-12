@@ -1,10 +1,9 @@
-from io import BytesIO
-import logging
 import json
 import os
 import requests
 from PIL import Image
-
+from io import BytesIO
+import logging
 
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
