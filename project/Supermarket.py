@@ -38,7 +38,7 @@ class Supermarket:
 
     def get_recent_database_update(self):
         # gets the timestamp held in json log file for last database_update for child supermarket object
-        with open("logs/data_updates.json", "r") as json_file:
+        with open("../project/logs/data_updates.json", "r") as json_file:
             json_data = json.load(json_file)
         for record in json_data:
             if record["event_type"] == "database_update" and record["supermarket"] == self.supermarket_name:
@@ -52,7 +52,7 @@ class Supermarket:
         for record in json_data:
             if record["event_type"] == "database_update" and record["supermarket"] == self.supermarket_name:
                 record["timestamp"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        with open("logs/data_updates.json", "w") as json_file:
+        with open("../project/logs/data_updates.json", "w") as json_file:
             json.dump(json_data, json_file)
 
 
