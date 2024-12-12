@@ -7,6 +7,7 @@ from helpers import download_image
 logging.basicConfig(filename="logs/database_changes.log", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
+
 class Supermarket:
 
     # parent supermarket function, inherited by individual supermarket objects
