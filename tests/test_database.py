@@ -12,7 +12,7 @@ def db():
     database.cursor.execute(BASKET_TABLE)
     database.cursor.execute(BASKET_CONTAINS_TABLE)
     database.connection.commit()
-    return db
+    return database
 
 
 def test_create_tables(db):
