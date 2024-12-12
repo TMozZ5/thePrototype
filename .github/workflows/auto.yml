@@ -45,7 +45,7 @@ jobs:
       - name: Lint Code
         run: |
           pip install pylint
-          pylint *.py
+          pylint project/**/*.py
 
   # BUILD
   build-and-deploy:
