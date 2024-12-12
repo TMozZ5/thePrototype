@@ -1,5 +1,7 @@
 """File contains all the SQL queries used in this application."""
 
+# Author: Thomas Morris
+
 # queries for creating initial tables for database
 USER_TABLE = """CREATE TABLE IF NOT EXISTS user (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
